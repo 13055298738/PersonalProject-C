@@ -22,9 +22,8 @@ class wordCount{
 		bool cmp_word_statistics(const word &a,const word &b);
 		bool skip();
 		void readfile();
-		void outPutWordCount();
-		void outPutCharacterCount();
-		void outPutFrequencyCount();
+		void outPut();
+		int characterCount(char c);
 		
 	private:
 		typedef struct{
