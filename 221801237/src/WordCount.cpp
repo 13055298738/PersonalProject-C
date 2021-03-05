@@ -43,6 +43,15 @@ bool skip(){
 	}
 
 
+bool is_digit(char ch){
+	return (ch>='0'&&ch<='9');
+}
+
+bool is_alpha(char ch){
+	return ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'));
+}
+
+
 int main(){
 
 	
@@ -56,25 +65,34 @@ int main(){
 	
 	
 	/*重定向输入流至 in.txt 文件,并读取 in.txt 文件中所有英文单词*/
-	freopen("in.txt","r",stdin);
+freopen("in.txt","r",stdin);
 	while(skip()&&scanf("%[a-zA-Z]",_word)!=EOF){
-	      number_of_words++;
-	      /*将只有首字母大写的单词的首字母转换成小写*/
-	    if(_word[1]!='\0'&&isupper(_word[0])&&islower(_word[1])) _word[0]|=1<<5;
-	    raw_word.push_back(_word);
+		/*将单词计入*/
+		if(is_word(_word)){
+            number_of_words++;
+	    /*将只有首字母大写的单词的首字母转换成小写*/
+	        if(_word[1]!='\0'&&isupper(_word[0])&&islower(_word[1])){
+			    _word[0]|=1<<5;
+			}
+	        raw_word.push_back(_word);
+	  
+        }
     }
-    /*记下字符数和行数*/
-    fstream fin;
+	fstream fin;
 	fin.open("in.txt");
     char ch;
     int charcnt=0;
     int linecnt=0;
     while(fin && fin.get(ch)){
-   	   cout << ch;
-   	   charcnt++;
-   	   if(ch=='\n'){
-   	 	   linecnt++;
-	   }
+
+        if(is_alpha(ch)||is_digit(ch)){
+        	cout << ch;
+        	charcnt++;
+        	if(ch=='\n'){
+   	 	       linecnt++;
+	        }
+	    }
+   	    
     }
     fin.close();
     
@@ -106,7 +124,7 @@ int main(){
     }
     
     
-    /*弥补跳出循环时最后一个未被计入单词*/
+    
     w.str=*last;
     w.wordcnt=it-last;
     word_statistics.push_back(w);
