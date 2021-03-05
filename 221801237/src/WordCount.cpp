@@ -63,7 +63,21 @@ int main(){
 	    if(_word[1]!='\0'&&isupper(_word[0])&&islower(_word[1])) _word[0]|=1<<5;
 	    raw_word.push_back(_word);
     }
-
+    /*记下字符数和行数*/
+    fstream fin;
+	fin.open("in.txt");
+    char ch;
+    int charcnt=0;
+    int linecnt=0;
+    while(fin && fin.get(ch)){
+   	   cout << ch;
+   	   charcnt++;
+   	   if(ch=='\n'){
+   	 	   linecnt++;
+	   }
+    }
+    fin.close();
+    
     return 0; 
 }
     
