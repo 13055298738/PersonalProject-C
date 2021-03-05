@@ -64,8 +64,8 @@ int main(){
 	vector<word>::iterator wit;
 	
 	
-	/*重定向输入流至 in.txt 文件,并读取 in.txt 文件中所有英文单词*/
-freopen("in.txt","r",stdin);
+	/*重定向输入流至 input.txt 文件,并读取 in.txt 文件中所有英文单词*/
+    freopen("input.txt","r",stdin);
 	while(skip()&&scanf("%[a-zA-Z]",_word)!=EOF){
 		/*将单词计入*/
 		if(is_word(_word)){
@@ -79,7 +79,7 @@ freopen("in.txt","r",stdin);
         }
     }
 	fstream fin;
-	fin.open("in.txt");
+	fin.open("input.txt");
     char ch;
     int charcnt=0;
     int linecnt=0;
@@ -97,7 +97,7 @@ freopen("in.txt","r",stdin);
     fin.close();
     
     /*重定向输出流至 out.txt 文件并输出相关说明信息*/
-    freopen("out.txt","w",stdout);
+    freopen("output.txt","w",stdout);
     printf("words: %d\n",number_of_words);
     printf("character: %d\n",charcnt);
     printf("line: %d\n",linecnt+1);
