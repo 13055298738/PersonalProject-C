@@ -105,6 +105,13 @@ int main(){
         }
     }
     
+    
+    /*弥补跳出循环时最后一个未被计入单词*/
+    w.str=*last;
+    w.wordcnt=it-last;
+    word_statistics.push_back(w);
+    
+    
     /*对结果集进行出现次数关键词降序排序*/
     sort(word_statistics.begin(),word_statistics.end(),cmp_word_statistics);
     bool b=false;
