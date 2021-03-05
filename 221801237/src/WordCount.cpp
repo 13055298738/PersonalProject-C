@@ -42,3 +42,29 @@ bool skip(){
     scanf("%*[^a-z||A-Z]"); return true;
 	}
 
+
+int main(){
+
+	
+	/*定义缓存空间*/
+	word w;
+	char _word[MAX_LENGTH];
+	
+	
+	vector<string>::iterator it,last;
+	vector<word>::iterator wit;
+	
+	
+	/*重定向输入流至 in.txt 文件,并读取 in.txt 文件中所有英文单词*/
+	freopen("in.txt","r",stdin);
+	while(skip()&&scanf("%[a-zA-Z]",_word)!=EOF){
+	      number_of_words++;
+	      /*将只有首字母大写的单词的首字母转换成小写*/
+	    if(_word[1]!='\0'&&isupper(_word[0])&&islower(_word[1])) _word[0]|=1<<5;
+	    raw_word.push_back(_word);
+    }
+
+    return 0; 
+}
+    
+	 
