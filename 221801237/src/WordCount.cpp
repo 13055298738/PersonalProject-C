@@ -9,7 +9,7 @@
 
 
 using namespace std;
-#define MAX_LENGTH 1<<10//单词的最大长度
+#define MAX_LENGTH 4<<10//单词的最大长度
 
 
 typedef struct{
@@ -22,25 +22,19 @@ typedef struct{
 
 int number_of_words=0;//记录单词统计总数
 vector<string> raw_word;//资源文本中的单词集
-vector<word> word_statistics(10);//统计结果集
+vector<word> word_statistics;//统计结果集
 
 
 /*字典排序比较函数*/
-bool cmp_raw_word(const string &a,const string &b){
-    return a<b;
-	}
+bool cmp_raw_word(const string &a,const string &b){return a<b;}
 
 
 /*词汇出现次数降序排序比较函数*/
-bool cmp_word_statistics(const word &a,const word &b){
-    return a.wordcnt>b.wordcnt;
-	}
+bool cmp_word_statistics(const word &a,const word &b){return a.wordcnt>b.wordcnt;}
 
 
 /*虚读取以处理资源文件除大小写字母外的所有汉字及字符*/
-bool skip(){
-    scanf("%*[^a-z||A-Z]"); return true;
-	}
+bool skip(){ scanf("%*[^a-z||A-Z]"); return true;}
 
 
 bool is_digit(char ch){
@@ -51,6 +45,27 @@ bool is_alpha(char ch){
 	return ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'));
 }
 
+
+bool is_word(const char* str) {
+
+	int char_num_count = 0;	// 开头连续字母的个数
+
+	if (is_digit(*str))		// 如果第一个是数字字符，不是单词 
+		return false;
+
+	// 遍历字符串 
+	for (const char* p = str; *p != '\0'; p++) {
+
+		if (is_alpha(*p))			// 如果是字符，字母数+1 
+			char_num_count++;
+		else if (char_num_count < 4)	// 碰到第一个非字母字符时，如果不满4个，不是单词 
+			return false;
+
+		if (char_num_count >= 4)
+			return true;
+	}
+	return false;
+}
 
 int main(){
 
@@ -64,8 +79,8 @@ int main(){
 	vector<word>::iterator wit;
 	
 	
-	/*重定向输入流至 input.txt 文件,并读取 in.txt 文件中所有英文单词*/
-    freopen("input.txt","r",stdin);
+	/*重定向输入流至 input.txt 文件,并读取 input.txt 文件中所有英文单词*/
+	freopen("input.txt","r",stdin);
 	while(skip()&&scanf("%[a-zA-Z]",_word)!=EOF){
 		/*将单词计入*/
 		if(is_word(_word)){
@@ -95,8 +110,8 @@ int main(){
    	    
     }
     fin.close();
-    
-    /*重定向输出流至 out.txt 文件并输出相关说明信息*/
+   
+   /*重定向输出流至 output.txt 文件并输出相关说明信息*/
     freopen("output.txt","w",stdout);
     printf("words: %d\n",number_of_words);
     printf("character: %d\n",charcnt);
@@ -122,15 +137,15 @@ int main(){
 		  
         }
     }
-    
-    
-    
+
+
+   /*弥补跳出循环时最后一个未被计入单词*/
     w.str=*last;
     w.wordcnt=it-last;
     word_statistics.push_back(w);
-    
-    
-    /*对结果集进行出现次数关键词降序排序*/
+
+
+   /*对结果集进行出现次数关键词降序排序*/
     sort(word_statistics.begin(),word_statistics.end(),cmp_word_statistics);
     bool b=false;
     for(wit=word_statistics.begin();wit!=word_statistics.end();wit++){
@@ -146,7 +161,10 @@ int main(){
 
 
     }
-    return 0; 
-}
-    
+
+
+    return 0;
+ 
+} 
+
 	 
