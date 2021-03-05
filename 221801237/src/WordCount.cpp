@@ -78,6 +78,49 @@ int main(){
     }
     fin.close();
     
+    /*重定向输出流至 out.txt 文件并输出相关说明信息*/
+    freopen("out.txt","w",stdout);
+    printf("words: %d\n",number_of_words);
+    printf("character: %d\n",charcnt);
+    printf("line: %d\n",linecnt+1);
+    
+
+
+   /*若没有检测到输入时,结束程序并返回提示信息*/
+    if(!raw_word.size()){
+       printf("There is no word in the \"in.txt\" or \"in.txt\" inexistence!\n");
+       return 0;
+    }
+
+
+   /*对单词集进行字典排序以便进行出现次数统计操作*/
+    sort(raw_word.begin(),raw_word.end(),cmp_raw_word);
+    for(last=raw_word.begin(),it=raw_word.begin()+1;it!=raw_word.end();it++){
+       if(*it!=*last){
+          w.str=*last;
+          w.wordcnt=it-last;
+		  word_statistics.push_back(w);
+          last=it;
+		  
+        }
+    }
+    
+    /*对结果集进行出现次数关键词降序排序*/
+    sort(word_statistics.begin(),word_statistics.end(),cmp_word_statistics);
+    bool b=false;
+    for(wit=word_statistics.begin();wit!=word_statistics.end();wit++){
+      /*为保证统计有意义,对统计数据输出进行调节*/
+       if((*wit).wordcnt*1.0/number_of_words>=0.05||((*wit).wordcnt>=2&&(*wit).wordcnt*100.0/number_of_words>=0.01)){
+      	  if(wit-word_statistics.begin()<10){
+		  
+            printf("%s: %d\n",((*wit).str).c_str(),(*wit).wordcnt);
+            b=true;
+            }
+
+        }
+
+
+    }
     return 0; 
 }
     
