@@ -113,9 +113,9 @@ int main(){
    
    /*重定向输出流至 output.txt 文件并输出相关说明信息*/
     freopen("output.txt","w",stdout);
+    printf("characters: %d\n",charcnt);
     printf("words: %d\n",number_of_words);
-    printf("character: %d\n",charcnt);
-    printf("line: %d\n",linecnt+1);
+    printf("lines: %d\n",linecnt+1);
     
 
 
